@@ -1,0 +1,58 @@
+require("dotenv").config();
+// const path = require("path");
+const logger = require("./src/utils/errorHandlings/logger");
+
+// Check for required environment variables
+const requiredEnvVariables = [
+    "PORT",
+    "DB_URL",
+    "CORS_ORIGIN",
+    "JWT_SECRET_KEY",
+];
+
+for (const variable of requiredEnvVariables) {
+    if (!process.env[variable]) {
+        logger.error(`Missing environment variable: ${variable}`);
+        process.exit(1);
+    }
+}
+
+const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const dbConnection = require("./config/dbConnection");
+const authRoutes = require("./src/routes/auth");
+
+const app = express();
+
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true
+}));
+
+app.use((err, req, res, next) => {
+    logger.error(err.stack);
+    res.status(500).json({
+        status: "failed",
+        message: "Something went wrong!"
+    });
+});
+
+app.use("/auth", authRoutes);
+
+// Serve static files for the React page
+// app.use(express.static(path.join(__dirname, "../client", "dist")));
+
+// If a route doesn't match any of the above, serve the React index.html
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+// });
+
+dbConnection();
+
+module.exports = app;
