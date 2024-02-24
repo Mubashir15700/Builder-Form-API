@@ -23,6 +23,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dbConnection = require("./config/dbConnection");
 const authRoutes = require("./src/routes/auth");
+const adminRoutes = require("./src/routes/admin");
+const userRoutes = require("./src/routes/user");
 
 const app = express();
 
@@ -44,6 +46,8 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
 
 // Serve static files for the React page
 // app.use(express.static(path.join(__dirname, "../client", "dist")));

@@ -17,6 +17,16 @@ class UserRepository {
         const newUser = new User(userData);
         return await newUser.save();
     };
+
+    async getAllUsers() {
+        return await User.find({ role: "user" }).select("-password");
+    };
+
+    async updateCreatedFormCount(id) {
+        return await User.findByIdAndUpdate(id, {
+            $inc: { formsCreated: 1 }
+        }, { new: true }); // Set { new: true } to return the updated document
+    };
 };
 
 module.exports = UserRepository;

@@ -1,5 +1,7 @@
 const express = require("express");
 
+const router = express.Router();
+
 const AuthController = require("../controllers/auth");
 const UserRepository = require("../repositories/user");
 const AuthService = require("../services/auth");
@@ -7,8 +9,6 @@ const AuthService = require("../services/auth");
 const userRepository = new UserRepository();
 const authService = new AuthService(userRepository);
 const authController = new AuthController(authService);
-
-const router = express.Router();
 
 router.get("/checkauth", authController.checkAuth.bind(authController));
 router.post("/login", authController.login.bind(authController));

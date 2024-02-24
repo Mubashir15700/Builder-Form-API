@@ -24,7 +24,7 @@ class AuthController {
                 userData: response.data.currentUser
             });
         } catch (error) {
-            res.status(401).json({ error: error.message });
+            res.status(401).json({ status: "failed", error: error.message });
         }
     };
 

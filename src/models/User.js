@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: validRoles
     },
+    formsCreated: {
+        type: Number,
+        default: 0 // Initialize formsCreated to 0
+    },
     password: {
         type: String,
         required: true
