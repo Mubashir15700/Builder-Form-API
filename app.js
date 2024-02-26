@@ -1,5 +1,5 @@
 require("dotenv").config({ path: __dirname + "/.env" });
-const path = require("path");
+// const path = require("path");
 const checkEnvVariables = require("./src/utils/checkEnvVariables");
 const logger = require("./src/utils/errorHandlings/logger");
 
@@ -50,11 +50,11 @@ app.use("/user", userRoutes);
 app.use("/forms", formRoutes);
 
 // Serve static files for the React page
-app.use(express.static(path.join(__dirname, "../client", "dist")));
+// app.use(express.static(path.join(__dirname, "../client", "dist")));
 
-// If a route doesn't match any of the above, serve the React index.html
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-});
+// // If a route doesn't match any of the above, serve the React index.html
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+// });
 
 module.exports = app;
