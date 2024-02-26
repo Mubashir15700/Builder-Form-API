@@ -35,6 +35,8 @@ app.use(cors({
     optionsSuccessStatus: 200,
 }));
 
+console.log("origin:", process.env.CORS_ORIGIN;
+
 app.use((err, req, res, next) => {
     logger.error("Global error middleware: ", err.stack);
     res.status(500).json({
