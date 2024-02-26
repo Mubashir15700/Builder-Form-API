@@ -1,5 +1,5 @@
-const signupSchema = require("../validations/signupSchema");
-const loginSchema = require("../validations/loginSchema");
+const signupSchema = require("../utils/validations/signupSchema");
+const loginSchema = require("../utils/validations/loginSchema");
 const setCookie = require("../utils/setCookie");
 
 class AuthController {

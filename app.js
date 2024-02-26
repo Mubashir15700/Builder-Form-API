@@ -1,5 +1,5 @@
 require("dotenv").config();
-// const path = require("path");
+const checkEnvVariables = require("./src/utils/checkEnvVariables");
 const logger = require("./src/utils/errorHandlings/logger");
 
 // Check for required environment variables
@@ -10,25 +10,22 @@ const requiredEnvVariables = [
     "JWT_SECRET_KEY",
 ];
 
-for (const variable of requiredEnvVariables) {
-    if (!process.env[variable]) {
-        logger.error(`Missing environment variable: ${variable}`);
-        process.exit(1);
-    }
-}
+checkEnvVariables(requiredEnvVariables);
 
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const dbConnection = require("./config/dbConnection");
-const authRoutes = require("./src/routes/auth");
-const adminRoutes = require("./src/routes/admin");
-const userRoutes = require("./src/routes/user");
+
+// Routes
+const authRoutes = require("./src/routes/authRoutes");
+const adminRoutes = require("./src/routes/adminRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+const formRoutes = require("./src/routes/formRoutes");
 
 const app = express();
 
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -38,7 +35,7 @@ app.use(cors({
 }));
 
 app.use((err, req, res, next) => {
-    logger.error(err.stack);
+    logger.error("Global error middleware: ", err.stack);
     res.status(500).json({
         status: "failed",
         message: "Something went wrong!"
@@ -48,15 +45,6 @@ app.use((err, req, res, next) => {
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-
-// Serve static files for the React page
-// app.use(express.static(path.join(__dirname, "../client", "dist")));
-
-// If a route doesn't match any of the above, serve the React index.html
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-// });
-
-dbConnection();
+app.use("/forms", formRoutes);
 
 module.exports = app;

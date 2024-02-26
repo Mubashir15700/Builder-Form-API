@@ -2,9 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const AuthController = require("../controllers/auth");
-const UserRepository = require("../repositories/user");
-const AuthService = require("../services/auth");
+const AuthController = require("../controllers/authController");
+const UserRepository = require("../repositories/userRepository");
+const AuthService = require("../services/authService");
 
 const userRepository = new UserRepository();
 const authService = new AuthService(userRepository);

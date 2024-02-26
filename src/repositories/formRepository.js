@@ -17,6 +17,14 @@ class FormRepository {
         // Save the document to the database
         return await newForm.save();
     };
+
+    async getForms(creatorId) {
+        return await Form.find({ creatorId }).sort({ createdAt: -1 });
+    };
+
+    async getForm(id) {
+        return await Form.findById(id);
+    };
 };
 
 module.exports = FormRepository;

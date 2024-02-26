@@ -12,6 +12,19 @@ const formElementSchema = new mongoose.Schema({
     placeholder: {
         type: String,
     },
+    validations: {
+        isRequired: {
+            type: Boolean,
+            default: false
+        },
+        minLength: {
+            type: Number,
+            default: 0
+        },
+        maxLength: {
+            type: Number,
+        },
+    }
 });
 
 const formSchema = new mongoose.Schema({
@@ -27,6 +40,10 @@ const formSchema = new mongoose.Schema({
         type: String,
     },
     formElements: [formElementSchema],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 const Form = mongoose.model("Form", formSchema);

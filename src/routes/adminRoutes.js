@@ -3,9 +3,9 @@ const { authChecker } = require("../middlewares/authChecker");
 
 const router = express.Router();
 
-const AdminController = require("../controllers/admin");
-const UserRepository = require("../repositories/user");
-const AdminService = require("../services/admin");
+const AdminController = require("../controllers/adminController");
+const UserRepository = require("../repositories/userRepository");
+const AdminService = require("../services/adminService");
 
 const userRepository = new UserRepository();
 const adminService = new AdminService(userRepository);

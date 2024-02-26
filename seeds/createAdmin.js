@@ -3,6 +3,7 @@ const User = require("../src/models/User");
 const dbConnection = require("../config/dbConnection");
 const hashPassword = require("../src/utils/hashPassword");
 const catchAsync = require("../src/utils/errorHandlings/catchAsync");
+const logger = require("../src/utils/errorHandlings/logger");
 
 dbConnection();
 
@@ -25,8 +26,10 @@ const seedAdmin = catchAsync(async () => {
 
         // Save the admin to the database
         await admin.save();
+
+        logger.info("Created admin successfully.");
     } else {
-        console.log("Admin already exists. Skipping seed.");
+        logger.info("Admin already exists. Skipping seed.");
     }
 });
 
