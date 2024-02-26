@@ -30,8 +30,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
+    origin: [process.env.CORS_ORIGIN],
+    credentials: true,
+    optionsSuccessStatus: 200,
 }));
 
 app.use((err, req, res, next) => {
