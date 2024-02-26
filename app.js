@@ -1,4 +1,5 @@
 require("dotenv").config({ path: __dirname + "/.env" });
+const path = require("path");
 const checkEnvVariables = require("./src/utils/checkEnvVariables");
 const logger = require("./src/utils/errorHandlings/logger");
 
@@ -29,24 +30,11 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(cors({
-//     origin: process.env.CORS_ORIGIN,
-//     credentials: true,
-//     optionsSuccessStatus: 200,
-// }));
-
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
-    methods:['POST','GET','DELETE'],
-    credentials: true,
-}))
-
-app.options('*', cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
+    optionsSuccessStatus: 200,
 }));
-
-console.log("origin:", process.env.CORS_ORIGIN);
 
 app.use((err, req, res, next) => {
     logger.error("Global error middleware: ", err.stack);
@@ -60,5 +48,13 @@ app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/forms", formRoutes);
+
+// Serve static files for the React page
+app.use(express.static(path.join(__dirname, "../client", "dist")));
+
+// If a route doesn't match any of the above, serve the React index.html
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+});
 
 module.exports = app;
