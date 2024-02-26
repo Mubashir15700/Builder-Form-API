@@ -35,6 +35,7 @@ app.use(cors({
     origin: "https://form-builder-nine-nu.vercel.app",
     methods: ["GET", "POST"], // You can specify the allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
+    credentials: true, // Allow credentials
 }));
 
 app.use((err, req, res, next) => {
