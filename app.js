@@ -30,10 +30,10 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// Configure CORS to allow requests from your frontend domain
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-    optionsSuccessStatus: 200,
+    origin: "https://form-builder-six-pi.vercel.app",
+    methods: ["GET", "POST"], // You can specify the allowed HTTP methods
 }));
 
 app.use((err, req, res, next) => {
@@ -52,7 +52,7 @@ app.use("/forms", formRoutes);
 // Serve static files for the React page
 // app.use(express.static(path.join(__dirname, "../client", "dist")));
 
-// // If a route doesn't match any of the above, serve the React index.html
+// // If a route doesn"t match any of the above, serve the React index.html
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
 // });
