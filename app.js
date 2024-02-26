@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 const checkEnvVariables = require("./src/utils/checkEnvVariables");
 const logger = require("./src/utils/errorHandlings/logger");
 
