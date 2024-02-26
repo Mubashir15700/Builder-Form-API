@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // Configure CORS to allow requests from your frontend domain
 app.use(cors({
-    origin: "https://form-builder-six-pi.vercel.app",
+    origin: "https://form-builder-nine-nu.vercel.app",
     methods: ["GET", "POST"], // You can specify the allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
 }));
