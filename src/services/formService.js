@@ -25,7 +25,8 @@ class FormService {
 
     async submitForm(id, data) {
         try {
-            const submitForm = this.submissionRepository.submitForm(id, data);
+
+            const submitForm = await this.submissionRepository.submitForm(id, data);
 
             if (!submitForm) {
                 throw new Error("Error while storing your response");

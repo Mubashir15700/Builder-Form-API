@@ -1,5 +1,4 @@
 require("dotenv").config({ path: __dirname + "/.env" });
-// const path = require("path");
 const checkEnvVariables = require("./src/utils/checkEnvVariables");
 const logger = require("./src/utils/errorHandlings/logger");
 
@@ -33,6 +32,7 @@ app.use(cookieParser());
 // Configure CORS to allow requests from your frontend domain
 app.use(cors({
     origin: "https://form-builder-kappa-nine.vercel.app",
+    // origin: "http://localhost:5173",
     methods: ["GET", "POST"], // You can specify the allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify the allowed headers
     credentials: true, // Allow credentials
@@ -50,13 +50,5 @@ app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/forms", formRoutes);
-
-// Serve static files for the React page
-// app.use(express.static(path.join(__dirname, "../client", "dist")));
-
-// // If a route doesn"t match any of the above, serve the React index.html
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
-// });
 
 module.exports = app;

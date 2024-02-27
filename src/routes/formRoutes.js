@@ -6,8 +6,12 @@ const FormController = require("../controllers/formController");
 const FormRepository = require("../repositories/formRepository");
 const FormService = require("../services/formService");
 
+const SubmissionRepository = require("../repositories/submissionRepository");
+
 const formRepository = new FormRepository();
-const formService = new FormService(formRepository);
+const submissionRepository = new SubmissionRepository();
+
+const formService = new FormService(formRepository, submissionRepository);
 const formController = new FormController(formService);
 
 router.get("/:id", formController.getForm.bind(formController));
