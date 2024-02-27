@@ -2,6 +2,8 @@ const setCookie = (res, cookieName, token, options = {}) => {
     const defaultOptions = {
         maxAge: 60000 * 60 * 24 * 7,
         httpOnly: true,
+        secure: true, // Ensures cookie is only sent over HTTPS
+        sameSite: "strict", // Controls when cookies are sent with cross-origin requests
     };
 
     const mergedOptions = { ...defaultOptions, ...options };
