@@ -29,7 +29,12 @@ class UserController {
 
     async getForms(req, res) {
         try {
-            const creatorId = req.user.userId;
+            let creatorId;
+            if (req.query.userId !== "null") {
+                creatorId = req.query.userId;
+            } else {
+                creatorId = req.user.userId;
+            }
 
             // Call the userService to gte forms
             const forms = await this.userService.getForms(creatorId);
