@@ -3,7 +3,8 @@ const setCookie = (res, cookieName, token, options = {}) => {
         maxAge: 60000 * 60 * 24 * 7,
         httpOnly: true,
         secure: true, // Ensures cookie is only sent over HTTPS
-        sameSite: "none"
+        sameSite: "none",
+        partitioned: true // Add the partitioned attribute
     };
 
     const mergedOptions = { ...defaultOptions, ...options };
