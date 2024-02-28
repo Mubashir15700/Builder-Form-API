@@ -1,5 +1,5 @@
 const express = require("express");
-const { authChecker } = require("../middlewares/authChecker");
+const { userAuthChecker } = require("../middlewares/authChecker");
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ const submissionRepository = new SubmissionRepository();
 const userService = new UserService(userRepository, formRepository, submissionRepository);
 const userController = new UserController(userService);
 
-router.post("/forms/create", authChecker, catchAsync(userController.createForm.bind(userController)));
-router.get("/forms", authChecker, catchAsync(userController.getForms.bind(userController)));
-router.get("/forms/:id/submissions", authChecker, catchAsync(userController.getSubmission.bind(userController)));
+router.post("/forms/create", userAuthChecker, catchAsync(userController.createForm.bind(userController)));
+router.get("/forms", userAuthChecker, catchAsync(userController.getForms.bind(userController)));
+router.get("/forms/:id/submissions", userAuthChecker, catchAsync(userController.getSubmission.bind(userController)));
 
 module.exports = router;
