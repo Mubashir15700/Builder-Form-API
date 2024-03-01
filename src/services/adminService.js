@@ -6,44 +6,32 @@ class AdminService {
     };
 
     async getUsers() {
-        try {
-            const users = await this.userRepository.getAllUsers();
-            return {
-                status: 200,
-                message: "Fetched users successfully",
-                data: {
-                    users
-                }
-            };
-        } catch (error) {
-            throw error;
-        }
+        const users = await this.userRepository.getAllUsers();
+        return {
+            status: 200,
+            message: "Fetched users successfully",
+            data: {
+                users
+            }
+        };
     };
 
     async getForms(creatorId) {
-        try {
-            const savedForms = await this.formRepository.getForms(creatorId);
+        const savedForms = await this.formRepository.getForms(creatorId);
 
-            return savedForms;
-        } catch (error) {
-            throw error;
-        }
+        return savedForms;
     };
 
     async getSubmission(formId) {
-        try {
-            const submissions = await this.submissionRepository.getSubmissions(formId);
+        const submissions = await this.submissionRepository.getSubmissions(formId);
 
-            return {
-                status: 200,
-                message: "Fetched submissions successfully",
-                data: {
-                    submissions,
-                }
-            };
-        } catch (error) {
-            throw error;
-        }
+        return {
+            status: 200,
+            message: "Fetched submissions successfully",
+            data: {
+                submissions,
+            }
+        };
     };
 };
 

@@ -8,74 +8,62 @@ class AuthController {
     };
 
     async checkAuth(req, res) {
-        try {
-            const { role } = req.query;
-            const token = role === "admin" ?
-                req.cookies.adminJwt :
-                req.cookies.userJwt;
+        const { role } = req.query;
+        const token = role === "admin" ?
+            req.cookies.adminJwt :
+            req.cookies.userJwt;
 
-            // Call the checkAuth method of the AuthService instance
-            const response = await this.authService.checkAuth(token);
+        // Call the checkAuth method of the AuthService instance
+        const response = await this.authService.checkAuth(token);
 
-            // Send a success response
-            res.status(200).json({
-                status: 200,
-                message: "Authentication successful",
-                userData: response.data.currentUser
-            });
-        } catch (error) {
-            res.status(401).json({ status: "failed", error: error.message });
-        }
+        // Send a success response
+        res.status(200).json({
+            status: 200,
+            message: "Authentication successful",
+            userData: response.data.currentUser
+        });
     };
 
     async login(req, res) {
-        try {
-            await loginSchema.validate(req.body);
+        await loginSchema.validate(req.body);
 
-            const { username, password } = req.body;
+        const { username, password } = req.body;
 
-            // Call authService.login()
-            const result = await this.authService.login(username, password);
+        // Call authService.login()
+        const result = await this.authService.login(username, password);
 
-            if (result.status === 200) {
-                const role = result.data.currentUser.role;
-                const cookieName = role === "admin" ? "adminJwt" : "userJwt";
-                setCookie(res, cookieName, result.data.token);
-            }
-
-            // Send a success response
-            res.status(200).json({
-                status: 200,
-                message: "Authentication successful",
-                userData: result.data.currentUser
-            });
-        } catch (error) {
-            res.status(401).json({ status: "failed", message: error.message });
+        if (result.status === 200) {
+            const role = result.data.currentUser.role;
+            const cookieName = role === "admin" ? "adminJwt" : "userJwt";
+            setCookie(res, cookieName, result.data.token);
         }
+
+        // Send a success response
+        res.status(200).json({
+            status: 200,
+            message: "Authentication successful",
+            userData: result.data.currentUser
+        });
     };
 
     async signUp(req, res) {
-        try {
-            await signupSchema.validate(req.body);
+        await signupSchema.validate(req.body);
 
-            // Call authService.login()
-            const result = await this.authService.signUp(req.body);
+        // Call authService.login()
+        const result = await this.authService.signUp(req.body);
 
-            if (result.status === 200) {
-                const role = result.data.currentUser.role;
-                const cookieName = role === "admin" ? "adminJwt" : "userJwt";
-                setCookie(res, cookieName, result.data.token);
-            }
-
-            // Send a success response
-            res.status(200).json({
-                status: 200,
-                message: "Authentication successful",
-                userData: result.data.currentUser
-            });
-        } catch (error) {
-            res.status(401).json({ status: "failed", message: error.message });
+        if (result.status === 200) {
+            const role = result.data.currentUser.role;
+            const cookieName = role === "admin" ? "adminJwt" : "userJwt";
+            setCookie(res, cookieName, result.data.token);
         }
+
+        // Send a success response
+        res.status(200).json({
+            status: 200,
+            message: "Authentication successful",
+            userData: result.data.currentUser
+        });
     };
 
     async logout(req, res) {
